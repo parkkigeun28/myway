@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>만물상</title>
+    <style>
+        :root { 
+            --primary: #03c75a; 
+            --secondary: #ff6b6b;
+            --bg: #f5f6f7; 
+            --text: #333; 
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); }
+
+        /* [네비게이션] */
+        header { 
+            background: white; 
+            padding: 0 20px; 
+            height: 60px; 
+            display: flex; 
+            align-items: center; 
+            border-bottom: 1px solid #ddd; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
+        }
+        .logo { 
+            font-weight: 900; 
+            font-size: 1.4rem; 
+            margin-right: auto; 
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            letter-spacing: -0.5px;
+        }
+        .nav-link { 
+            margin-left: 20px; 
+            cursor: pointer; 
+            color: #666; 
+            font-weight: 600; 
+            padding: 18px 0; 
+            border-bottom: 3px solid transparent; 
+            transition: all 0.3s; 
+            font-size: 0.95rem;
+        }
+        .nav-link:hover, .nav-link.active { 
+            color: var(--primary); 
+            border-bottom-color: var(--primary); 
+        }
+
+        /* [홈 화면 히어로 섹션] */
+        .hero {
+            background: var(--gradient);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: move 20s linear infinite;
+        }
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: -2px;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .hero-btn {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .hero-btn.primary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .hero-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .hero-btn.secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+        .hero-btn.secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* [기능 카드] */
+        .features {
+            max-width: 1200px;
+            margin: -60px auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* [통계 섹션] */
+        .stats {
+            background: white;
+            padding: 60px 20px;
+            margin: 60px 0;
+        }
+        .stats-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+        .stat-item {
+            padding: 20px;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* [레이아웃] */
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; min-height: 60vh; }
+        .section { display: none; animation: fadeIn 0.4s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* [게시판 목록] */
+        .list-header {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .list-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #02b350;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(3,199,90,0.3);
+        }
+        .btn-secondary {
+            background: #f1f3f5;
+            color: #666;
+        }
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .post-list { 
+            background: white; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+        }
+        .post-item {
+            padding: 25px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .post-item:hover { background: #fafafa; }
+        .post-item:last-child { border-bottom: none; }
+        .post-title { 
+            font-size: 1.2rem; 
+            font-weight: 700; 
+            margin-bottom: 12px; 
+            color: #333;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .post-meta { 
+            font-size: 0.9rem; 
+            color: #999; 
+            display: flex; 
+            gap: 12px; 
+            flex-wrap: wrap;
+        }
+        .post-meta span { display: flex; align-items: center; gap: 4px; }
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #999;
+        }
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* [블로그 카드 레이아웃] */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .blog-thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        .blog-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .blog-content {
+            padding: 20px;
+        }
+        .blog-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #333;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+        .blog-meta {
+            font-size: 0.85rem;
+            color: #999;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* [작성 폼] */
+        .form-container {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(3,199,90,0.1);
+        }
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+            line-height: 1.6;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        /* [블로그 에디터] */
+        .blog-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s;
+        }
+        .blog-section:hover {
+            border-color: var(--primary);
+            background: #f1f8f5;
+        }
+        .add-section-btn {
+            width: 100%;
+            padding: 15px;
+            border: 2px dashed #dee2e6;
+            background: white;
+            border-radius: 12px;
+            color: var(--primary);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        .add-section-btn:hover {
+            background: #f1f8f5;
+            border-color: var(--primary);
+        }
+
+        /* [상세보기] */
+        .view-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .view-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .view-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .view-meta {
+            color: #999;
+            font-size: 0.95rem;
+        }
+        .view-body {
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        .view-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .view-body p {
+            margin: 20px 0;
+            color: #444;
+        }
+        .view-actions {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        /* [로딩] */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .loading.show { display: flex; }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* [반응형] */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .nav-link { margin-left: 15px; font-size: 0.9rem; }
+            .list-header { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .blog-grid { grid-template-columns: 1fr; }
+            .form-container, .view-container { padding: 25px; }
+            .view-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="switchTab('home')">✨ 만물상</div>
+        <div class="nav-link" onclick="switchTab('board')">📝 자유게시판</div>
+        <div class="nav-link" onclick="switchTab('blog')">✈️ 여행블로그</div>
+        <div class="nav-link" onclick="switchTab('knowledge')">💡 지식공유</div>
+    </header>
+
+    <!-- 홈 섹션 -->
+    <div id="sec-home" class="section active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>만물상에 오신 것을 환영합니다</h1>
+                <p>자유로운 소통과 여행 기록, 지식 공유가 함께하는 공간입니다</p>
+                <div class="hero-buttons">
+                    <button class="hero-btn primary" onclick="switchTab('board')">게시판 둘러보기</button>
+                    <button class="hero-btn secondary" onclick="switchTab('blog')">여행 기록 보기</button>
+                    <button class="hero-btn secondary" onclick="switchTab('knowledge')">지식 탐색하기</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature-grid">
+                <div class="feature-card" onclick="switchTab('board')">
+                    <span class="feature-icon">💬</span>
+                    <h3>자유게시판</h3>
+                    <p>일상과 생각을 자유롭게 나누는 공간입니다</p>
+                </div>
+                <div class="feature-card" onclick="switchTab('blog')">
+                    <span class="feature-icon">🗺️</span>
+                    <h3>여행블로그</h3>
+                    <p>특별한 여행의 순간을 사진과 함께 기록하세요</p>
+                </div>
+                <div class="feature-card" onclick="switchTab('knowledge')">
+                    <span class="feature-icon">📚</span>
+                    <h3>지식공유</h3>
+                    <p>노하우와 팁을 사진과 함께 공유하세요</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-posts">0</div>
+                    <div class="stat-label">총 게시글</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-blogs">0</div>
+                    <div class="stat-label">여행 기록</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-knowledge">0</div>
+                    <div class="stat-label">지식 공유</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 자유게시판 -->
+    <div id="sec-board" class="section">
+        <div class="container">
+            <div class="list-header">
+                <h2>📝 자유게시판</h2>
+                <button class="btn btn-primary" onclick="showWrite('board')">✍️ 글쓰기</button>
+            </div>
+            <div id="board-list" class="post-list"></div>
+        </div>
+    </div>
+
+    <!-- 여행블로그 -->
+    <div id="sec-blog" class="section">
+        <div class="container">
+            <div class="list-header">
+                <h2>✈️ 여행블로그</h2>
+                <button class="btn btn-primary" onclick="showWrite('blog')">📝 여행 기록하기</button>
+            </div>
+            <div id="blog-list" class="blog-grid"></div>
+        </div>
+    </div>
+
+    <!-- 지식공유 -->
+    <div id="sec-knowledge" class="section">
+        <div class="container">
+            <div class="list-header">
+                <h2>💡 지식공유</h2>
+                <button class="btn btn-primary" onclick="showWrite('knowledge')">📚 지식 공유하기</button>
+            </div>
+            <div id="knowledge-list" class="blog-grid"></div>
+        </div>
+    </div>
+
+    <!-- 글쓰기 -->
+    <div id="sec-write" class="section">
+        <div class="container">
+            <div class="form-container">
+                <h2 class="form-title" id="write-title">글쓰기</h2>
+                <input type="hidden" id="write-type">
+                
+                <div class="input-group">
+                    <label>제목 *</label>
+                    <input type="text" class="form-control" id="w-title" placeholder="제목을 입력하세요">
+                </div>
+                
+                <div class="input-group">
+                    <label>작성자 *</label>
+                    <input type="text" class="form-control" id="w-author" placeholder="이름을 입력하세요">
+                </div>
+
+                <!-- 자유게시판용 -->
+                <div id="editor-board" style="display:none;">
+                    <div class="input-group">
+                        <label>내용 *</label>
+                        <textarea class="form-control" id="w-content" placeholder="내용을 입력하세요"></textarea>
+                    </div>
+                </div>
+
+                <!-- 블로그/지식공유용 -->
+                <div id="editor-blog" style="display:none;">
+                    <div id="blog-sections-area"></div>
+                    <button class="add-section-btn" onclick="addBlogSection()">
+                        ➕ 사진 및 설명 추가
+                    </button>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-secondary" onclick="cancelWrite()">취소</button>
+                    <button class="btn btn-primary" onclick="submitPost()">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 상세보기 -->
+    <div id="sec-view" class="section">
+        <div class="container">
+            <div class="view-container">
+                <div class="view-header">
+                    <h1 class="view-title" id="v-title"></h1>
+                    <div class="view-meta" id="v-meta"></div>
+                </div>
+                <div class="view-body" id="v-body"></div>
+                <div class="view-actions">
+                    <button class="btn btn-secondary" onclick="closeView()">목록으로</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwBQZVDTR1rtr0yqT3E6sWs4O3DjhLoIOe7YmZ49M-uPZV2N_aEqrbJgeZxji5t6gbjng/exec';
+        
+        let boardData = [];
+        let blogData = [];
+        let knowledgeData = [];
+
+        window.onload = function() {
+            loadAllData();
+        }
+
+        async function loadAllData() {
+            document.getElementById('loading').style.display = 'flex';
+            try {
+                await Promise.all([
+                    loadPosts('board'),
+                    loadPosts('blog'),
+                    loadPosts('knowledge')
+                ]);
+                updateStats();
+            } catch(e) {
+                console.error('데이터 로딩 오류:', e);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        async function loadPosts(type) {
+            try {
+                const action = type === 'board' ? 'getPosts' : 
+                              type === 'blog' ? 'getBlog' : 'getKnowledge';
+                const res = await fetch(`${API_URL}?action=${action}`);
+                const data = await res.json();
+                
+                if(type === 'board') {
+                    boardData = data;
+                    renderBoardList();
+                } else if(type === 'blog') {
+                    blogData = data;
+                    renderBlogList();
+                } else {
+                    knowledgeData = data;
+                    renderKnowledgeList();
+                }
+            } catch(e) {
+                console.error(`${type} 로딩 실패:`, e);
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('stat-posts').innerText = boardData.length;
+            document.getElementById('stat-blogs').innerText = blogData.length;
+            document.getElementById('stat-knowledge').innerText = knowledgeData.length;
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            
+            if(tab === 'home') {
+                showSection('sec-home');
+            } else if(tab === 'board') {
+                document.querySelectorAll('.nav-link')[0].classList.add('active');
+                showSection('sec-board');
+                loadPosts('board');
+            } else if(tab === 'blog') {
+                document.querySelectorAll('.nav-link')[1].classList.add('active');
+                showSection('sec-blog');
+                loadPosts('blog');
+            } else if(tab === 'knowledge') {
+                document.querySelectorAll('.nav-link')[2].classList.add('active');
+                showSection('sec-knowledge');
+                loadPosts('knowledge');
+            }
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function renderBoardList() {
+            const container = document.getElementById('board-list');
+            if(boardData.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📝</div>
+                        <p>아직 작성된 글이 없습니다.<br>첫 번째 글을 작성해보세요!</p>
+                    </div>`;
+                return;
+            }
+
+            let html = '';
+            boardData.forEach((item, idx) => {
+                html += `
+                <div class="post-item" onclick="viewPost('board', ${idx})">
+                    <div class="post-title">${item.title}</div>
+                    <div class="post-meta">
+                        <span>✍️ ${item.author}</span>
+                        <span>•</span>
+                        <span>📅 ${item.date}</span>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderBlogList() {
+            renderCardList(blogData, 'blog-list', '✈️');
+        }
+
+        function renderKnowledgeList() {
+            renderCardList(knowledgeData, 'knowledge-list', '💡');
+        }
+
+        function renderCardList(data, containerId, defaultIcon) {
+            const container = document.getElementById(containerId);
+            if(data.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-state-icon">${defaultIcon}</div>
+                        <p>아직 등록된 내용이 없습니다.<br>첫 번째 기록을 남겨보세요!</p>
+                    </div>`;
+                return;
+            }
+
+            let html = '';
+            data.forEach((item, idx) => {
+                const type = containerId === 'blog-list' ? 'blog' : 'knowledge';
+                html += `
+                <div class="blog-card" onclick="viewPost('${type}', ${idx})">
+                    <div class="blog-thumbnail">
+                        ${item.thumbnail ? 
+                            `<img src="${item.thumbnail}" alt="${item.title}">` : 
+                            defaultIcon
+                        }
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-title">${item.title}</div>
+                        <div class="blog-meta">
+                            <span>✍️ ${item.author}</span>
+                            <span>•</span>
+                            <span>📅 ${item.date}</span>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function showWrite(type) {
+            document.getElementById('write-type').value = type;
+            document.getElementById('w-title').value = '';
+            document.getElementById('w-author').value = '';
+            document.getElementById('w-content').value = '';
+            document.getElementById('blog-sections-area').innerHTML = '';
+            
+            if(type === 'board') {
+                document.getElementById('write-title').innerText = "📝 자유 게시판 글쓰기";
+                document.getElementById('editor-board').style.display = 'block';
+                document.getElementById('editor-blog').style.display = 'none';
+            } else if(type === 'blog') {
+                document.getElementById('write-title').innerText = "✈️ 여행 기록 남기기";
+                document.getElementById('editor-board').style.display = 'none';
+                document.getElementById('editor-blog').style.display = 'block';
+                addBlogSection();
+            } else if(type === 'knowledge') {
+                document.getElementById('write-title').innerText = "💡 지식 공유하기";
+                document.getElementById('editor-board').style.display = 'none';
+                document.getElementById('editor-blog').style.display = 'block';
+                addBlogSection();
+            }
+            showSection('sec-write');
+        }
+
+        function cancelWrite() {
+            if(confirm('작성 중인 내용이 사라집니다. 취소하시겠습니까?')) {
+                const type = document.getElementById('write-type').value;
+                switchTab(type);
+            }
+        }
+
+        function addBlogSection() {
+            const div = document.createElement('div');
+            div.className = 'blog-section';
+            div.innerHTML = `
+                <div style="margin-bottom:10px; font-weight:bold; color:#555;">📷 사진 및 설명</div>
+                <div class="input-group">
+                    <input type="file" class="form-control" accept="image/*" style="margin-bottom:10px;">
+                </div>
+                <div class="input-group">
+                    <textarea class="form-control" placeholder="사진에 대한 설명을 적어주세요." style="height:100px;"></textarea>
+                </div>
+                <button onclick="this.parentElement.remove()" style="float:right; margin-top:5px; border:none; background:none; color:#ff6b6b; cursor:pointer; font-weight:600;">🗑️ 삭제</button>
+                <div style="clear:both;"></div>
+            `;
+            document.getElementById('blog-sections-area').appendChild(div);
+        }
+
+        async function submitPost() {
+            const type = document.getElementById('write-type').value;
+            const title = document.getElementById('w-title').value.trim();
+            const author = document.getElementById('w-author').value.trim();
+            
+            if(!title || !author) {
+                alert("⚠️ 제목과 작성자를 입력해주세요.");
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'flex';
+            let payload = { title: title, author: author };
+
+            if(type === 'board') {
+                const content = document.getElementById('w-content').value.trim();
+                if(!content) {
+                    alert("⚠️ 내용을 입력해주세요.");
+                    document.getElementById('loading').style.display = 'none';
+                    return;
+                }
+                payload.action = 'savePost';
+                payload.content = content;
+                await sendData(payload);
+            } else {
+                const sections = document.querySelectorAll('.blog-section');
+                let contentList = [];
+                let firstThumb = "";
+                let imgCount = 1;
+
+                for(let sec of sections) {
+                    const fileInput = sec.querySelector('input[type=file]');
+                    const text = sec.querySelector('textarea').value.trim();
+                    let imgUrl = "";
+
+                    if(fileInput.files.length > 0) {
+                        try {
+                            const originalFile = fileInput.files[0];
+                            const newFileName = `${title}_${imgCount}.jpg`;
+                            imgUrl = await uploadFile(originalFile, newFileName);
+                            if(!firstThumb) firstThumb = imgUrl;
+                            imgCount++;
+                        } catch(e) { 
+                            console.error(e); 
+                            alert("이미지 업로드 중 오류가 발생했습니다.");
+                        }
+                    }
+                    if(imgUrl || text) {
+                        contentList.push({ imgUrl: imgUrl, text: text });
+                    }
+                }
+
+                if(contentList.length === 0) {
+                    alert("⚠️ 최소 하나 이상의 사진 또는 내용을 추가해주세요.");
+                    document.getElementById('loading').style.display = 'none';
+                    return;
+                }
+
+                payload.action = type === 'blog' ? 'saveBlog' : 'saveKnowledge';
+                payload.content = JSON.stringify(contentList);
+                payload.thumbnail = firstThumb;
+                await sendData(payload);
+            }
+        }
+
+        async function sendData(data) {
+            try {
+                const res = await fetch(API_URL, { 
+                    method: 'POST', 
+                    body: JSON.stringify(data) 
+                });
+                const result = await res.json();
+                
+                if(result.success) {
+                    alert("✅ 등록되었습니다!");
+                    switchTab(document.getElementById('write-type').value);
+                } else {
+                    alert("❌ 등록 실패: " + (result.message || "알 수 없는 오류"));
+                }
+            } catch(e) { 
+                alert("❌ 오류 발생: " + e); 
+            } finally { 
+                document.getElementById('loading').style.display = 'none'; 
+            }
+        }
+
+        function uploadFile(file, newName) {
+            return new Promise((resolve, reject) => {
+                const MAX_WIDTH = 1024;
+                const QUALITY = 0.7;
+
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', QUALITY);
+
+                        fetch(API_URL, {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                action: 'uploadImage',
+                                fileName: newName || file.name,
+                                mimeType: 'image/jpeg',
+                                fileData: compressedDataUrl
+                            })
+                        })
+                        .then(res => res.json())
+                        .then(json => {
+                            if(json.success) resolve(json.url);
+                            else reject(json.message || "업로드 실패");
+                        })
+                        .catch(err => reject(err));
+                    }
+                };
+            });
+        }
+
+        function viewPost(type, idx) {
+            let data;
+            if(type === 'board') data = boardData[idx];
+            else if(type === 'blog') data = blogData[idx];
+            else data = knowledgeData[idx];
+
+            document.getElementById('v-title').innerText = data.title;
+            document.getElementById('v-meta').innerText = `✍️ ${data.author} | 📅 ${data.date}`;
+            const body = document.getElementById('v-body');
+            
+            if(type === 'board') {
+                body.innerHTML = `<p>${data.content.replace(/\n/g, '<br>')}</p>`;
+            } else {
+                let sections = [];
+                try { sections = JSON.parse(data.content); } catch(e) { sections = [{text: data.content}]; }
+                let html = '';
+                sections.forEach(sec => {
+                    if(sec.imgUrl) html += `<img src="${sec.imgUrl}" alt="이미지">`;
+                    if(sec.text) html += `<p>${sec.text}</p>`;
+                });
+                body.innerHTML = html;
+            }
+            showSection('sec-view');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function closeView() {
+            const currentTab = document.querySelector('.nav-link.active');
+            if(currentTab.innerText.includes('게시판')) switchTab('board');
+            else if(currentTab.innerText.includes('블로그')) switchTab('blog');
+            else if(currentTab.innerText.includes('지식')) switchTab('knowledge');
+            else switchTab('home');
+        }
+    </script>
+</body>
+</html>
